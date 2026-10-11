@@ -18,14 +18,14 @@ echo "Stopping any existing ${CONTAINER} container..."
 docker rm -f "$CONTAINER" 2>/dev/null || true
 
 gpu_flags=()
-if [[ "${use_gpu,,}" =~ ^y(es)?$ ]]; then
+if [[ "$use_gpu" =~ ^[Yy]([Ee][Ss])?$ ]]; then
   gpu_flags=("--gpus=all")
   echo "GPU passthrough enabled."
 fi
 
 echo "Starting ${CONTAINER}..."
 docker run -d \
-  "${gpu_flags[@]}" \
+  ${gpu_flags[@]+"${gpu_flags[@]}"} \
   -v "ollama:/root/.ollama" \
   -p "${HOST_PORT}:${CONTAINER_PORT}" \
   --name "$CONTAINER" \

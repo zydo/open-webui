@@ -155,7 +155,7 @@ echo
 
 if [[ "$headless" != true ]]; then
   read -rp "$(echo -e "${WHITE}${BOLD}Proceed with this setup? [Y/n]: ${RESET}")" confirm
-  if [[ "${confirm,,}" == "n" ]]; then
+  if [[ "$confirm" == [Nn] ]]; then
     echo "Aborted."
     exit 0
   fi
