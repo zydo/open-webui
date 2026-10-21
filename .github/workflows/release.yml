@@ -7,6 +7,7 @@ name: Release
 on:
   push:
     branches: [main]
+    paths: [package.json]
 
 concurrency:
   group: release-${{ github.ref }}
@@ -22,13 +23,6 @@ jobs:
       actions: write
     steps:
       - uses: actions/checkout@v5
-
-      - name: Abort if package.json unchanged
-        run: |
-          git diff --cached --diff-filter=d package.json || {
-            echo "package.json not modified — skipping release"
-            exit 1
-          }
 
       - name: Read version
         id: pkg
